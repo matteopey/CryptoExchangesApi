@@ -1,0 +1,20 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Exchanges\HitbtcApi\HitbtcApi\**" />
+    <Compile Remove="Exchanges\RadarRelayApi\RadarRelayApi\**" />
+    <EmbeddedResource Remove="Exchanges\HitbtcApi\HitbtcApi\**" />
+    <EmbeddedResource Remove="Exchanges\RadarRelayApi\RadarRelayApi\**" />
+    <None Remove="Exchanges\HitbtcApi\HitbtcApi\**" />
+    <None Remove="Exchanges\RadarRelayApi\RadarRelayApi\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Newtonsoft.Json" Version="11.0.2" />
+  </ItemGroup>
+
+</Project>
