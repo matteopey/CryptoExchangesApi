@@ -55,6 +55,24 @@ namespace ExchangesApi.Tests
             Assert.Equal(100, res.Asks.Count);
             Assert.Equal(100, res.Bids.Count);
         }
+
+        [Fact]
+        public async void BookTickerOneSymbolOnline()
+        {
+            var r = new Maybe<IDownloadData>();
+            var b = new Binance(r);
+            var res = await b.BookTicker(new Maybe<string>("ETHBTC"));
+            Assert.Single(res);
+        }
+
+        [Fact]
+        public async void BookTickerAllOnline()
+        {
+            var r = new Maybe<IDownloadData>();
+            var b = new Binance(r);
+            var res = await b.BookTicker(new Maybe<string>());
+            Assert.NotEmpty(res);
+        }
     }
 
     class LocalDownloader : IDownloadData

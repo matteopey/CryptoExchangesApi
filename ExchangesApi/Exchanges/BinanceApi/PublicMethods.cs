@@ -1,8 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net.Http;
+using System.Security.Cryptography;
 using System.Threading.Tasks;
 using ExchangesApi.Exchanges.BinanceApi.ApiCalls;
+using ExchangesApi.Exchanges.BinanceApi.Data;
 using Newtonsoft.Json;
 
 namespace ExchangesApi.Exchanges.BinanceApi
@@ -44,6 +47,34 @@ namespace ExchangesApi.Exchanges.BinanceApi
 
                 var response = await downloader.Get("depth", content);
                 return JsonConvert.DeserializeObject<Orderbook>(response);
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+
+        public async Task<List<Ticker>> BookTicker(Maybe<string> symbol)
+        {
+            try
+            {
+                Maybe<FormUrlEncodedContent> content;
+
+                if (!symbol.Any())
+                {
+                    content = new Maybe<FormUrlEncodedContent>();
+                }
+                else
+                    content = new Maybe<FormUrlEncodedContent>(new FormUrlEncodedContent(
+                        new Dictionary<string, string>()
+                        {
+                            {"symbol", symbol.Single()}
+                        }
+                    ));
+
+                var response = await downloader.Get("ticker/bookTicker", content);
+                return JsonConvert.DeserializeObject<List<Ticker>>(response, 
+                    new SingleOrArrayConverter<Ticker>());
             }
             catch (Exception e)
             {

@@ -3,7 +3,7 @@ using ExchangesApi.Exchanges.BinanceApi.Data;
 
 namespace ExchangesApi.Exchanges.BinanceApi.ApiCalls
 {
-    public class AllBookTickers : List<Ticker>
+    public class BookTicker : List<Ticker>
     {
     }
 }

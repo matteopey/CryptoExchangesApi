@@ -1,7 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using ExchangesApi.Exchanges.BinanceApi.ApiCalls;
+using ExchangesApi.Exchanges.BinanceApi.Data;
 
 namespace ExchangesApi.Exchanges.BinanceApi
 {
@@ -41,6 +43,18 @@ namespace ExchangesApi.Exchanges.BinanceApi
             try
             {
                 return await PublicApi.Depth(marketSymbol, limit.ToString());
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+
+        public async Task<List<Ticker>> BookTicker(Maybe<string> marketSymbol)
+        {
+            try
+            {
+                return await PublicApi.BookTicker(marketSymbol);
             }
             catch (Exception e)
             {
