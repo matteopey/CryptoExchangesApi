@@ -1,6 +1,3 @@
-using System.IO;
-using System.Net.Http;
-using System.Threading.Tasks;
 using Xunit;
 using ExchangesApi.Exchanges.BinanceApi;
 
@@ -13,7 +10,7 @@ namespace ExchangesApi.Tests
 
         public BinanceTests()
         {
-            reader = new Maybe<IDownloadData>(new LocalDownloader());
+            reader = new Maybe<IDownloadData>(new LocalDownloader("BinanceData"));
             binance = new Binance(reader);
         }
 
@@ -72,21 +69,6 @@ namespace ExchangesApi.Tests
             var b = new Binance(r);
             var res = await b.BookTicker(new Maybe<string>());
             Assert.NotEmpty(res);
-        }
-    }
-
-    class LocalDownloader : IDownloadData
-    {
-        public async Task<string> Get(string method, Maybe<FormUrlEncodedContent> parameters)
-        {
-            // Create path
-            var file = "../../../BinanceData/" + method + ".json";
-
-            var stream = File.OpenRead(file);
-            using (var reader = new StreamReader(stream))
-            {
-                return await reader.ReadToEndAsync();
-            }
         }
     }
 }
