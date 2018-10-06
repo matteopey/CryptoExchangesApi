@@ -68,7 +68,7 @@ namespace ExchangesApi
         /// <param name="method"></param>
         /// <param name="parameters"></param>
         /// <returns></returns>
-	    private async Task<Uri> CreateUrl(string method, Maybe<FormUrlEncodedContent> parameters)
+	    public virtual async Task<Uri> CreateUrl(string method, Maybe<FormUrlEncodedContent> parameters)
 	    {
             // Create uri with correct path
 	        var uri = new UriBuilder(endpoint);
