@@ -10,7 +10,7 @@ using Newtonsoft.Json;
 
 namespace ExchangesApi.Exchanges.BinanceApi
 {
-    public class PublicMethods
+    class PublicMethods
     {
         private readonly IDownloadData downloader;
 

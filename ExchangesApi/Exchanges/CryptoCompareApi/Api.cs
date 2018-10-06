@@ -8,7 +8,7 @@ using Newtonsoft.Json;
 
 namespace ExchangesApi.Exchanges.CryptoCompareApi
 {
-    public class Api
+    class Api
     {
         private readonly IDownloadData downloader;
 
