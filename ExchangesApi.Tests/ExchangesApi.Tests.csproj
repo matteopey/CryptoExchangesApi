@@ -16,4 +16,8 @@
     <ProjectReference Include="..\ExchangesApi\ExchangesApi.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="LiquiData\" />
+  </ItemGroup>
+
 </Project>
