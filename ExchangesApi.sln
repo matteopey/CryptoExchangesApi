@@ -7,8 +7,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ExchangesApi", "ExchangesAp
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ExchangesApi.Tests", "ExchangesApi.Tests\ExchangesApi.Tests.csproj", "{BF628E04-6BAF-4DA3-B10B-551823797FBB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExchangesApi.Runner", "ExchangesApi.Runner\ExchangesApi.Runner.csproj", "{7CC7C391-A6A5-4AF3-BA00-2B044AF49C4E}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -23,10 +21,6 @@ Global
 		{BF628E04-6BAF-4DA3-B10B-551823797FBB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BF628E04-6BAF-4DA3-B10B-551823797FBB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BF628E04-6BAF-4DA3-B10B-551823797FBB}.Release|Any CPU.Build.0 = Release|Any CPU
-		{7CC7C391-A6A5-4AF3-BA00-2B044AF49C4E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{7CC7C391-A6A5-4AF3-BA00-2B044AF49C4E}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{7CC7C391-A6A5-4AF3-BA00-2B044AF49C4E}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{7CC7C391-A6A5-4AF3-BA00-2B044AF49C4E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
