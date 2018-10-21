@@ -17,7 +17,7 @@ namespace ExchangesApi.Exchanges.CryptoCompareApi
             this.downloader = downloader;
         }
 
-        public async Task<HistoDay> HistoDay(string fromSymbol, string toSymbol,
+        public async Task<GenericResponse> HistoDay(string fromSymbol, string toSymbol,
             Maybe<string> exchange,
             Maybe<int> aggregate, Maybe<int> limit, Maybe<int> toTs, Maybe<string> allData)
         {
@@ -59,7 +59,7 @@ namespace ExchangesApi.Exchanges.CryptoCompareApi
 
                 var response = await downloader.Get("histoday", content);
 
-                return JsonConvert.DeserializeObject<HistoDay>(response);
+                return JsonConvert.DeserializeObject<GenericResponse>(response);
             }
             catch (Exception e)
             {
@@ -67,7 +67,7 @@ namespace ExchangesApi.Exchanges.CryptoCompareApi
             }
         }
 
-        public async Task<HistoHour> HistoHour(string fromSymbol, string toSymbol,
+        public async Task<GenericResponse> HistoHour(string fromSymbol, string toSymbol,
             Maybe<string> exchange,
             Maybe<int> aggregate, Maybe<int> limit, Maybe<int> toTs)
         {
@@ -104,7 +104,7 @@ namespace ExchangesApi.Exchanges.CryptoCompareApi
 
                 var response = await downloader.Get("histohour", content);
 
-                return JsonConvert.DeserializeObject<HistoHour>(response);
+                return JsonConvert.DeserializeObject<GenericResponse>(response);
             }
             catch (Exception e)
             {

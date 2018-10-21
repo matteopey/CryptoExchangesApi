@@ -50,7 +50,6 @@ namespace ExchangesApi.Tests
 
             Assert.Equal("Success", res.Response);
             Assert.NotEmpty(res.Data);
-            Assert.Equal(11, res.Data.Count());
             Assert.True(res.Aggregated);
         }
 
@@ -82,7 +81,6 @@ namespace ExchangesApi.Tests
 
             Assert.Equal("Success", res.Response);
             Assert.NotEmpty(res.Data);
-            Assert.Equal(11, res.Data.Count());
             Assert.True(res.Aggregated);
         }
     }
