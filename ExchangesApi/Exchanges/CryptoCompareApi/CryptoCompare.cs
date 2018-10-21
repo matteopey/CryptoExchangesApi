@@ -22,7 +22,7 @@ namespace ExchangesApi.Exchanges.CryptoCompareApi
             api = new Api(downloader.Single());
         }
 
-        public async Task<GenericResponse> HistoDay(string fromSymbol, string toSymbol,
+        public async Task<HistoDay> HistoDay(string fromSymbol, string toSymbol,
             Maybe<string> exchange,
             Maybe<int> aggregate, Maybe<int> limit, Maybe<int> toTs, Maybe<string> allData)
         {
@@ -30,7 +30,7 @@ namespace ExchangesApi.Exchanges.CryptoCompareApi
                 allData);
         }
 
-        public async Task<GenericResponse> HistoHour(string fromSymbol, string toSymbol,
+        public async Task<HistoHour> HistoHour(string fromSymbol, string toSymbol,
             Maybe<string> exchange,
             Maybe<int> aggregate, Maybe<int> limit, Maybe<int> toTs)
         {
