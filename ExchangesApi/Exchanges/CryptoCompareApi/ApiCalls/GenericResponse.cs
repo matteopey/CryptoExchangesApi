@@ -2,12 +2,12 @@
 
 namespace ExchangesApi.Exchanges.CryptoCompareApi.ApiCalls
 {
-    public class GenericResponse<T>
+    public class GenericResponse
     {
         public string Response { get; set; }
         public int Type { get; set; }
         public bool Aggregated { get; set; }
-        public IEnumerable<T> Data { get; set; }
+        public IEnumerable<Ticker> Data { get; set; }
         public int TimeTo { get; set; }
         public int TimeFrom { get; set; }
         public bool FirstValueInArray { get; set; }

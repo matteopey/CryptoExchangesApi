@@ -17,49 +17,17 @@ namespace ExchangesApi.Exchanges.CryptoCompareApi
             this.downloader = downloader;
         }
 
-        public async Task<HistoDay> HistoDay(string fromSymbol, string toSymbol,
+        public async Task<GenericResponse> HistoDay(string fromSymbol, string toSymbol,
             Maybe<string> exchange,
             Maybe<int> aggregate, Maybe<int> limit, Maybe<int> toTs, Maybe<string> allData)
         {
             try
             {
-                var parameters = new Dictionary<string, string>()
-                {
-                    {"fsym", fromSymbol},
-                    {"tsym", toSymbol}
-                };
-
-                if (exchange.Any())
-                {
-                    parameters.Add("e", exchange.Single());
-                }
-
-                if (aggregate.Any())
-                {
-                    parameters.Add("aggregate", aggregate.Single().ToString());
-                }
-
-                if (limit.Any())
-                {
-                    parameters.Add("limit", limit.Single().ToString());
-                }
-
-                if (toTs.Any())
-                {
-                    parameters.Add("toTs", toTs.Single().ToString());
-                }
-
-                if (allData.Any())
-                {
-                    parameters.Add("allData", allData.Single());
-                }
-
-                var content = new Maybe<FormUrlEncodedContent>(
-                    new FormUrlEncodedContent(parameters));
-
+                var content = CreateUrlEncodedParameters(fromSymbol, toSymbol, exchange, aggregate,
+                    limit, toTs);
                 var response = await downloader.Get("histoday", content);
 
-                return JsonConvert.DeserializeObject<HistoDay>(response);
+                return JsonConvert.DeserializeObject<GenericResponse>(response);
             }
             catch (Exception e)
             {
@@ -67,21 +35,37 @@ namespace ExchangesApi.Exchanges.CryptoCompareApi
             }
         }
 
-        public async Task<HistoHour> HistoHour(string fromSymbol, string toSymbol,
-            Maybe<string> exchange,
-            Maybe<int> aggregate, Maybe<int> limit, Maybe<int> toTs)
+        public async Task<GenericResponse> HistoHour(string fromSymbol, string toSymbol,
+            Maybe<string> exchange, Maybe<int> aggregate, Maybe<int> limit, Maybe<int> toTs)
+        {
+            try
+            {
+                var content = CreateUrlEncodedParameters(fromSymbol, toSymbol, exchange, aggregate,
+                    limit, toTs);
+                var response = await downloader.Get("histohour", content);
+
+                return JsonConvert.DeserializeObject<GenericResponse>(response);
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+
+        private Maybe<FormUrlEncodedContent> CreateUrlEncodedParameters(string fsym, string tsym, 
+            Maybe<string> e, Maybe<int> aggregate, Maybe<int> limit, Maybe<int> toTs)
         {
             try
             {
                 var parameters = new Dictionary<string, string>()
                 {
-                    {"fsym", fromSymbol},
-                    {"tsym", toSymbol}
+                    {"fsym", fsym},
+                    {"tsym", tsym}
                 };
 
-                if (exchange.Any())
+                if (e.Any())
                 {
-                    parameters.Add("e", exchange.Single());
+                    parameters.Add("e", e.Single());
                 }
 
                 if (aggregate.Any())
@@ -99,16 +83,12 @@ namespace ExchangesApi.Exchanges.CryptoCompareApi
                     parameters.Add("toTs", toTs.Single().ToString());
                 }
 
-                var content = new Maybe<FormUrlEncodedContent>(
+                return new Maybe<FormUrlEncodedContent>(
                     new FormUrlEncodedContent(parameters));
-
-                var response = await downloader.Get("histohour", content);
-
-                return JsonConvert.DeserializeObject<HistoHour>(response);
             }
-            catch (Exception e)
+            catch (Exception ex)
             {
-                throw e;
+                throw ex;
             }
         }
     }
