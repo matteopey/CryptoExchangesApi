@@ -1,4 +1,4 @@
-﻿namespace ExchangesApi.Exchanges.CryptoCompareApi.ApiCalls
+namespace ExchangesApi.Exchanges.CryptoCompareApi.ApiCalls
 {
     public class Ticker
     {

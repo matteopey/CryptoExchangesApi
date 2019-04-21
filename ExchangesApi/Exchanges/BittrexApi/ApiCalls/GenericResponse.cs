@@ -1,4 +1,4 @@
-﻿namespace ExchangesApi.Exchanges.BittrexApi.ApiCalls
+namespace ExchangesApi.Exchanges.BittrexApi.ApiCalls
 {
     public class GenericResponse<T>
     {

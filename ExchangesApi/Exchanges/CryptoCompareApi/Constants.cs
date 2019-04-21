@@ -1,4 +1,4 @@
-﻿namespace ExchangesApi.Exchanges.CryptoCompareApi
+namespace ExchangesApi.Exchanges.CryptoCompareApi
 {
     class Constants
     {

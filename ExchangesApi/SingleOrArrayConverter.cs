@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Text;
 using Newtonsoft.Json;
@@ -7,7 +7,7 @@ using Newtonsoft.Json.Linq;
 namespace ExchangesApi
 {
     /// <summary>
-    /// Helper method to allow Json.NET to deserialize an array or a single object 
+    /// Helper method to allow Json.NET to deserialize an array or a single object
     /// for the same property.
     /// </summary>
     /// <typeparam name="T"></typeparam>
@@ -18,7 +18,7 @@ namespace ExchangesApi
             throw new NotImplementedException();
         }
 
-        public override object ReadJson(JsonReader reader, Type objectType, object existingValue, 
+        public override object ReadJson(JsonReader reader, Type objectType, object existingValue,
             JsonSerializer serializer)
         {
             var token = JToken.Load(reader);

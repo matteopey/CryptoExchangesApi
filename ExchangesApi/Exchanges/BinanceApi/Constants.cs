@@ -1,4 +1,4 @@
-﻿namespace ExchangesApi.Exchanges.BinanceApi
+namespace ExchangesApi.Exchanges.BinanceApi
 {
     class Constants
     {

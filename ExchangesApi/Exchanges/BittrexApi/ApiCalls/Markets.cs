@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using ExchangesApi.Exchanges.BittrexApi.Data;
 
 namespace ExchangesApi.Exchanges.BittrexApi.ApiCalls

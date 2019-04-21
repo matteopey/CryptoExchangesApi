@@ -1,4 +1,4 @@
-﻿namespace ExchangesApi.Exchanges.BittrexApi
+namespace ExchangesApi.Exchanges.BittrexApi
 {
     class Constants
     {

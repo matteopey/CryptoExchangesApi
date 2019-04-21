@@ -1,4 +1,4 @@
-﻿using ExchangesApi.Exchanges.BittrexApi.Data;
+using ExchangesApi.Exchanges.BittrexApi.Data;
 
 namespace ExchangesApi.Exchanges.BittrexApi.ApiCalls
 {

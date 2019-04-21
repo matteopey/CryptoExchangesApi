@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -9,21 +9,21 @@ namespace ExchangesApi
     /// <summary>
     /// Download data from the APIs.
     /// </summary>
-	public class DownloadData : IDownloadData
-	{
-		int requestsNumber = 0;
-		HttpClient client = new HttpClient();
+    public class DownloadData : IDownloadData
+    {
+        int requestsNumber = 0;
+        HttpClient client = new HttpClient();
 
         private readonly string endpoint;
-	    private readonly string absolutePath;
+        private readonly string absolutePath;
 
-	    public DownloadData(string endpoint, string absolutePath)
-	    {
-	        this.endpoint = endpoint;
-	        this.absolutePath = absolutePath;
-	    }
+        public DownloadData(string endpoint, string absolutePath)
+        {
+            this.endpoint = endpoint;
+            this.absolutePath = absolutePath;
+        }
 
-	    /// <summary>
+        /// <summary>
         /// Get the data from the provided API.
         /// </summary>
         /// <param name="method">API method name</param>
@@ -40,26 +40,26 @@ namespace ExchangesApi
         /// </summary>
         /// <param name="uri"></param>
         /// <returns></returns>
-	    private async Task<string> MakeCall(Uri uri)
-	    {
-	        try
-	        {
-	            HttpClientManagement();
-	            requestsNumber++;
-	            var res = await client.GetAsync(uri);
+        private async Task<string> MakeCall(Uri uri)
+        {
+            try
+            {
+                HttpClientManagement();
+                requestsNumber++;
+                var res = await client.GetAsync(uri);
 
-	            if (res.StatusCode == HttpStatusCode.TooManyRequests)
-	                throw new HttpRequestException("Requests limit exceeded");
+                if (res.StatusCode == HttpStatusCode.TooManyRequests)
+                    throw new HttpRequestException("Requests limit exceeded");
 
-	            if (!res.IsSuccessStatusCode)
-	                throw new HttpRequestException($"Error in response, code: {res.StatusCode}");
+                if (!res.IsSuccessStatusCode)
+                    throw new HttpRequestException($"Error in response, code: {res.StatusCode}");
 
-	            return await res.Content.ReadAsStringAsync();
-	        }
-	        catch (HttpRequestException e)
-	        {
-	            throw e;
-	        }
+                return await res.Content.ReadAsStringAsync();
+            }
+            catch (HttpRequestException e)
+            {
+                throw e;
+            }
         }
 
         /// <summary>
@@ -68,35 +68,35 @@ namespace ExchangesApi
         /// <param name="method"></param>
         /// <param name="parameters"></param>
         /// <returns></returns>
-	    public virtual async Task<Uri> CreateUrl(string method, Maybe<FormUrlEncodedContent> parameters)
-	    {
+        public virtual async Task<Uri> CreateUrl(string method, Maybe<FormUrlEncodedContent> parameters)
+        {
             // Create uri with correct path
-	        var uri = new UriBuilder(endpoint);
-	        uri.Path = absolutePath + method;
+            var uri = new UriBuilder(endpoint);
+            uri.Path = absolutePath + method;
 
             // Add parameters in the query if present
             string par;
-	        if (parameters.Any())
-	            par = await parameters.Single().ReadAsStringAsync();
-	        else
-	            par = string.Empty;
-	        uri.Query = par;
+            if (parameters.Any())
+                par = await parameters.Single().ReadAsStringAsync();
+            else
+                par = string.Empty;
+            uri.Query = par;
 
-	        return uri.Uri;
-	    }
+            return uri.Uri;
+        }
 
         /// <summary>
         /// Manage creation and disposing of the HTTP client.
         /// </summary>
-	    private void HttpClientManagement()
-	    {
-	        if (requestsNumber == 20)
-	        {
-	            client.Dispose();
+        private void HttpClientManagement()
+        {
+            if (requestsNumber == 20)
+            {
+                client.Dispose();
 
-	            requestsNumber = 0;
-	            client = new HttpClient();
-	        }
-	    }
-    }    
+                requestsNumber = 0;
+                client = new HttpClient();
+            }
+        }
+    }
 }

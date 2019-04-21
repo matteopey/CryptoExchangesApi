@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
@@ -73,7 +73,7 @@ namespace ExchangesApi.Exchanges.BinanceApi
                     ));
 
                 var response = await downloader.Get("ticker/bookTicker", content);
-                return JsonConvert.DeserializeObject<List<Ticker>>(response, 
+                return JsonConvert.DeserializeObject<List<Ticker>>(response,
                     new SingleOrArrayConverter<Ticker>());
             }
             catch (Exception e)

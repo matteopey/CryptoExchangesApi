@@ -1,4 +1,4 @@
-﻿namespace ExchangesApi.Exchanges.BittrexApi.Data
+namespace ExchangesApi.Exchanges.BittrexApi.Data
 {
     public class GenericTicker
     {

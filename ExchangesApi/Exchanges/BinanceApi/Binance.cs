@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -20,7 +20,7 @@ namespace ExchangesApi.Exchanges.BinanceApi
                     new DownloadData(Constants.Endpoint, Constants.AbsolutePath)
                 );
 
-            // We can call Single() safely because we are sure there is only one 
+            // We can call Single() safely because we are sure there is only one
             // instance of IDownloadData inside the Maybe
             PublicApi = new PublicMethods(downloader.Single());
             PrivateApi = new PrivateMethods();

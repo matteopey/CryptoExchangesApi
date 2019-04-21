@@ -1,4 +1,4 @@
-﻿namespace ExchangesApi.Exchanges.BinanceApi.Data
+namespace ExchangesApi.Exchanges.BinanceApi.Data
 {
     public class Ticker
     {
