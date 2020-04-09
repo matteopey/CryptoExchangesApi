@@ -4,6 +4,7 @@
     <TargetFramework>netstandard2.1</TargetFramework>
     <IsPackable>true</IsPackable>
     <VersionPrefix>1.0.8</VersionPrefix>
+    <RepositoryUrl>https://github.com/matteopey/ExchangesApi</RepositoryUrl>
   </PropertyGroup>
 
   <ItemGroup>
