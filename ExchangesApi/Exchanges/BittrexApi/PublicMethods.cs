@@ -12,10 +12,16 @@ namespace ExchangesApi.Exchanges.BittrexApi
     {
         // Download data handler
         IDownloadData downloader;
+        private JsonSerializerSettings jsonSettings;
 
         public PublicMethods(IDownloadData downloader)
         {
             this.downloader = downloader;
+
+            jsonSettings = new JsonSerializerSettings
+            {
+                NullValueHandling = NullValueHandling.Ignore
+            };
         }
 
         public async Task<Markets> Markets()
@@ -23,7 +29,8 @@ namespace ExchangesApi.Exchanges.BittrexApi
             try
             {
                 var result = await downloader.Get("getmarkets", new Maybe<FormUrlEncodedContent>());
-                return JsonConvert.DeserializeObject<Markets>(result);
+
+                return JsonConvert.DeserializeObject<Markets>(result, jsonSettings);
             }
             catch (Exception e)
             {
@@ -37,7 +44,8 @@ namespace ExchangesApi.Exchanges.BittrexApi
             {
                 var result =
                     await downloader.Get("getcurrencies", new Maybe<FormUrlEncodedContent>());
-                return JsonConvert.DeserializeObject<Currencies>(result);
+
+                return JsonConvert.DeserializeObject<Currencies>(result, jsonSettings);
             }
             catch (Exception e)
             {
@@ -57,7 +65,8 @@ namespace ExchangesApi.Exchanges.BittrexApi
                 ));
 
                 var result = await downloader.Get("getticker", parameters);
-                return JsonConvert.DeserializeObject<Ticker>(result);
+
+                return JsonConvert.DeserializeObject<Ticker>(result, jsonSettings);
             }
             catch (Exception e)
             {
@@ -71,7 +80,8 @@ namespace ExchangesApi.Exchanges.BittrexApi
             {
                 var result = await downloader.Get("getmarketsummaries",
                     new Maybe<FormUrlEncodedContent>());
-                return JsonConvert.DeserializeObject<Summaries>(result);
+
+                return JsonConvert.DeserializeObject<Summaries>(result, jsonSettings);
             }
             catch (Exception e)
             {
@@ -91,7 +101,8 @@ namespace ExchangesApi.Exchanges.BittrexApi
                 ));
 
                 var result = await downloader.Get("getmarketsummary", parameters);
-                return JsonConvert.DeserializeObject<Summaries>(result);
+
+                return JsonConvert.DeserializeObject<Summaries>(result, jsonSettings);
             }
             catch (Exception e)
             {
@@ -117,7 +128,7 @@ namespace ExchangesApi.Exchanges.BittrexApi
                 // If the type is not both, API return only an array.
                 if (type.Equals("both"))
                 {
-                    return JsonConvert.DeserializeObject<Orderbook>(result);
+                    return JsonConvert.DeserializeObject<Orderbook>(result, jsonSettings);
                 }
 
                 if (type.Equals("buy"))
@@ -128,7 +139,7 @@ namespace ExchangesApi.Exchanges.BittrexApi
 
                     // Deserialize
                     var response =
-                        JsonConvert.DeserializeObject<GenericResponse<IList<Book.Tick>>>(result);
+                        JsonConvert.DeserializeObject<GenericResponse<IList<Book.Tick>>>(result, jsonSettings);
 
                     // Craft object
                     orderbook.Message = response.Message;
@@ -146,7 +157,7 @@ namespace ExchangesApi.Exchanges.BittrexApi
 
                     // Deserialize
                     var response =
-                        JsonConvert.DeserializeObject<GenericResponse<IList<Book.Tick>>>(result);
+                        JsonConvert.DeserializeObject<GenericResponse<IList<Book.Tick>>>(result, jsonSettings);
 
                     // Craft object
                     orderbook.Message = response.Message;
@@ -176,7 +187,8 @@ namespace ExchangesApi.Exchanges.BittrexApi
                 ));
 
                 var result = await downloader.Get("getmarkethistory", parameters);
-                return JsonConvert.DeserializeObject<MarketHistory>(result);
+
+                return JsonConvert.DeserializeObject<MarketHistory>(result, jsonSettings);
             }
             catch (Exception e)
             {
