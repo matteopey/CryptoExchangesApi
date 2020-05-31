@@ -1,24 +1,26 @@
+using ExchangesApi.Exchanges.BinanceApi.ApiCalls;
+using ExchangesApi.Exchanges.BinanceApi.Data;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using ExchangesApi.Exchanges.BinanceApi.ApiCalls;
-using ExchangesApi.Exchanges.BinanceApi.Data;
 
 namespace ExchangesApi.Exchanges.BinanceApi
 {
     public class Binance
     {
-        PublicMethods PublicApi;
-        PrivateMethods PrivateApi;
+        private readonly PublicMethods PublicApi;
+        private readonly PrivateMethods PrivateApi;
 
         public Binance(Maybe<IDownloadData> downloader)
         {
             // If a downloader is not provided, create the default
             if (!downloader.Any())
+            {
                 downloader = new Maybe<IDownloadData>(
                     new DownloadData(Constants.Endpoint, Constants.AbsolutePath)
                 );
+            }
 
             // We can call Single() safely because we are sure there is only one
             // instance of IDownloadData inside the Maybe
@@ -55,6 +57,18 @@ namespace ExchangesApi.Exchanges.BinanceApi
             try
             {
                 return await PublicApi.BookTicker(marketSymbol);
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+
+        public async Task<List<LastPriceTicker>> TickerPrice(string symbol = "")
+        {
+            try
+            {
+                return await PublicApi.TickerPrice(symbol);
             }
             catch (Exception e)
             {

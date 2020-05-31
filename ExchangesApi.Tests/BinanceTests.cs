@@ -70,5 +70,26 @@ namespace ExchangesApi.Tests
             var res = await b.BookTicker(new Maybe<string>());
             Assert.NotEmpty(res);
         }
+
+        [Fact]
+        public async void TickerPriceAllOnline()
+        {
+            var r = new Maybe<IDownloadData>();
+            var b = new Binance(r);
+            var res = await b.TickerPrice("");
+            Assert.NotEmpty(res);
+        }
+
+        [Fact]
+        public async void TickerPriceSingleOnline()
+        {
+            var r = new Maybe<IDownloadData>();
+            var b = new Binance(r);
+            var res = await b.TickerPrice("ETHBTC");
+
+            Assert.NotEmpty(res);
+            Assert.Single(res);
+            Assert.Equal("ETHBTC", res[0].Symbol);
+        }
     }
 }

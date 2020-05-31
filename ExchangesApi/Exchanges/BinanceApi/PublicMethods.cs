@@ -1,16 +1,15 @@
+using ExchangesApi.Exchanges.BinanceApi.ApiCalls;
+using ExchangesApi.Exchanges.BinanceApi.Data;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
-using System.Security.Cryptography;
 using System.Threading.Tasks;
-using ExchangesApi.Exchanges.BinanceApi.ApiCalls;
-using ExchangesApi.Exchanges.BinanceApi.Data;
-using Newtonsoft.Json;
 
 namespace ExchangesApi.Exchanges.BinanceApi
 {
-    class PublicMethods
+    internal class PublicMethods
     {
         private readonly IDownloadData downloader;
 
@@ -65,16 +64,49 @@ namespace ExchangesApi.Exchanges.BinanceApi
                     content = new Maybe<FormUrlEncodedContent>();
                 }
                 else
+                {
                     content = new Maybe<FormUrlEncodedContent>(new FormUrlEncodedContent(
                         new Dictionary<string, string>()
                         {
                             {"symbol", symbol.Single()}
                         }
                     ));
+                }
 
                 var response = await downloader.Get("ticker/bookTicker", content);
                 return JsonConvert.DeserializeObject<List<Ticker>>(response,
                     new SingleOrArrayConverter<Ticker>());
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+
+        public async Task<List<LastPriceTicker>> TickerPrice(string symbol = "")
+        {
+            try
+            {
+                Maybe<FormUrlEncodedContent> content;
+
+                if (symbol != string.Empty)
+                {
+                    content = new Maybe<FormUrlEncodedContent>(new FormUrlEncodedContent(
+                        new Dictionary<string, string>()
+                        {
+                            { "symbol", symbol }
+                        }
+                    ));
+                }
+                else
+                {
+                    content = new Maybe<FormUrlEncodedContent>();
+                }
+
+                var response = await downloader.Get("ticker/price", content);
+
+                return JsonConvert.DeserializeObject<List<LastPriceTicker>>(response,
+                    new SingleOrArrayConverter<LastPriceTicker>());
             }
             catch (Exception e)
             {
