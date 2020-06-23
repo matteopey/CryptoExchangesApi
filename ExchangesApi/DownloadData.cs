@@ -48,7 +48,7 @@ namespace ExchangesApi
                 requestsNumber++;
                 var res = await client.GetAsync(uri);
 
-                if (res.StatusCode == HttpStatusCode.TooManyRequests)
+                if (res.StatusCode == HttpStatusCode.InternalServerError)
                     throw new HttpRequestException("Requests limit exceeded");
 
                 if (!res.IsSuccessStatusCode)
