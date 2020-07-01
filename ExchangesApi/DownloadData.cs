@@ -36,6 +36,28 @@ namespace ExchangesApi
         }
 
         /// <summary>
+        /// Send a request message
+        /// </summary>
+        /// <param name="req"></param>
+        /// <returns></returns>
+        public async Task<string> Send(HttpRequestMessage req)
+        {
+            try
+            {
+                HttpClientManagement();
+                requestsNumber++;
+
+                var res = await client.SendAsync(req);
+
+                return await res.Content.ReadAsStringAsync();
+            }
+            catch(HttpRequestException e)
+            {
+                throw e;
+            }
+        }
+
+        /// <summary>
         /// Actually make the HTTP GET call.
         /// </summary>
         /// <param name="uri"></param>
@@ -68,7 +90,7 @@ namespace ExchangesApi
         /// <param name="method"></param>
         /// <param name="parameters"></param>
         /// <returns></returns>
-        public virtual async Task<Uri> CreateUrl(string method, Maybe<FormUrlEncodedContent> parameters)
+        public async Task<Uri> CreateUrl(string method, Maybe<FormUrlEncodedContent> parameters)
         {
             // Create uri with correct path
             var uri = new UriBuilder(endpoint);
