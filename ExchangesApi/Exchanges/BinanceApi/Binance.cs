@@ -9,8 +9,8 @@ namespace ExchangesApi.Exchanges.BinanceApi
 {
     public class Binance
     {
-        private readonly PublicMethods PublicApi;
-        private readonly PrivateMethods PrivateApi;
+        private readonly PublicMethods _publicApi;
+        private readonly PrivateMethods _privateApi;
 
         public Binance(Maybe<IDownloadData> downloader)
         {
@@ -24,15 +24,15 @@ namespace ExchangesApi.Exchanges.BinanceApi
 
             // We can call Single() safely because we are sure there is only one
             // instance of IDownloadData inside the Maybe
-            PublicApi = new PublicMethods(downloader.Single());
-            PrivateApi = new PrivateMethods();
+            _publicApi = new PublicMethods(downloader.Single());
+            _privateApi = new PrivateMethods();
         }
 
         public async Task<ExchangeInfo> ExchangeInfo()
         {
             try
             {
-                return await PublicApi.ExchangeInfo();
+                return await _publicApi.ExchangeInfo();
             }
             catch (Exception e)
             {
@@ -44,7 +44,7 @@ namespace ExchangesApi.Exchanges.BinanceApi
         {
             try
             {
-                return await PublicApi.Depth(marketSymbol, limit.ToString());
+                return await _publicApi.Depth(marketSymbol, limit.ToString());
             }
             catch (Exception e)
             {
@@ -56,7 +56,7 @@ namespace ExchangesApi.Exchanges.BinanceApi
         {
             try
             {
-                return await PublicApi.BookTicker(marketSymbol);
+                return await _publicApi.BookTicker(marketSymbol);
             }
             catch (Exception e)
             {
@@ -68,7 +68,7 @@ namespace ExchangesApi.Exchanges.BinanceApi
         {
             try
             {
-                return await PublicApi.TickerPrice(symbol);
+                return await _publicApi.TickerPrice(symbol);
             }
             catch (Exception e)
             {

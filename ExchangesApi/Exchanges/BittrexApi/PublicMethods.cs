@@ -11,14 +11,14 @@ namespace ExchangesApi.Exchanges.BittrexApi
     class PublicMethods
     {
         // Download data handler
-        IDownloadData downloader;
-        private JsonSerializerSettings jsonSettings;
+        private readonly IDownloadData _downloader;
+        private readonly JsonSerializerSettings _jsonSettings;
 
         public PublicMethods(IDownloadData downloader)
         {
-            this.downloader = downloader;
+            _downloader = downloader;
 
-            jsonSettings = new JsonSerializerSettings
+            _jsonSettings = new JsonSerializerSettings
             {
                 NullValueHandling = NullValueHandling.Ignore
             };
@@ -28,9 +28,9 @@ namespace ExchangesApi.Exchanges.BittrexApi
         {
             try
             {
-                var result = await downloader.Get("getmarkets", new Maybe<FormUrlEncodedContent>());
+                var result = await _downloader.Get("getmarkets", new Maybe<FormUrlEncodedContent>());
 
-                return JsonConvert.DeserializeObject<Markets>(result, jsonSettings);
+                return JsonConvert.DeserializeObject<Markets>(result, _jsonSettings);
             }
             catch (Exception e)
             {
@@ -43,9 +43,9 @@ namespace ExchangesApi.Exchanges.BittrexApi
             try
             {
                 var result =
-                    await downloader.Get("getcurrencies", new Maybe<FormUrlEncodedContent>());
+                    await _downloader.Get("getcurrencies", new Maybe<FormUrlEncodedContent>());
 
-                return JsonConvert.DeserializeObject<Currencies>(result, jsonSettings);
+                return JsonConvert.DeserializeObject<Currencies>(result, _jsonSettings);
             }
             catch (Exception e)
             {
@@ -64,9 +64,9 @@ namespace ExchangesApi.Exchanges.BittrexApi
                     }
                 ));
 
-                var result = await downloader.Get("getticker", parameters);
+                var result = await _downloader.Get("getticker", parameters);
 
-                return JsonConvert.DeserializeObject<Ticker>(result, jsonSettings);
+                return JsonConvert.DeserializeObject<Ticker>(result, _jsonSettings);
             }
             catch (Exception e)
             {
@@ -78,10 +78,10 @@ namespace ExchangesApi.Exchanges.BittrexApi
         {
             try
             {
-                var result = await downloader.Get("getmarketsummaries",
+                var result = await _downloader.Get("getmarketsummaries",
                     new Maybe<FormUrlEncodedContent>());
 
-                return JsonConvert.DeserializeObject<Summaries>(result, jsonSettings);
+                return JsonConvert.DeserializeObject<Summaries>(result, _jsonSettings);
             }
             catch (Exception e)
             {
@@ -100,9 +100,9 @@ namespace ExchangesApi.Exchanges.BittrexApi
                     }
                 ));
 
-                var result = await downloader.Get("getmarketsummary", parameters);
+                var result = await _downloader.Get("getmarketsummary", parameters);
 
-                return JsonConvert.DeserializeObject<Summaries>(result, jsonSettings);
+                return JsonConvert.DeserializeObject<Summaries>(result, _jsonSettings);
             }
             catch (Exception e)
             {
@@ -122,13 +122,13 @@ namespace ExchangesApi.Exchanges.BittrexApi
                     }
                 ));
 
-                var result = await downloader.Get("getorderbook", parameters);
+                var result = await _downloader.Get("getorderbook", parameters);
 
                 // Need to split cases.
                 // If the type is not both, API return only an array.
                 if (type.Equals("both"))
                 {
-                    return JsonConvert.DeserializeObject<Orderbook>(result, jsonSettings);
+                    return JsonConvert.DeserializeObject<Orderbook>(result, _jsonSettings);
                 }
 
                 if (type.Equals("buy"))
@@ -139,7 +139,7 @@ namespace ExchangesApi.Exchanges.BittrexApi
 
                     // Deserialize
                     var response =
-                        JsonConvert.DeserializeObject<GenericResponse<IList<Book.Tick>>>(result, jsonSettings);
+                        JsonConvert.DeserializeObject<GenericResponse<IList<Book.Tick>>>(result, _jsonSettings);
 
                     // Craft object
                     orderbook.Message = response.Message;
@@ -157,7 +157,7 @@ namespace ExchangesApi.Exchanges.BittrexApi
 
                     // Deserialize
                     var response =
-                        JsonConvert.DeserializeObject<GenericResponse<IList<Book.Tick>>>(result, jsonSettings);
+                        JsonConvert.DeserializeObject<GenericResponse<IList<Book.Tick>>>(result, _jsonSettings);
 
                     // Craft object
                     orderbook.Message = response.Message;
@@ -186,9 +186,9 @@ namespace ExchangesApi.Exchanges.BittrexApi
                     }
                 ));
 
-                var result = await downloader.Get("getmarkethistory", parameters);
+                var result = await _downloader.Get("getmarkethistory", parameters);
 
-                return JsonConvert.DeserializeObject<MarketHistory>(result, jsonSettings);
+                return JsonConvert.DeserializeObject<MarketHistory>(result, _jsonSettings);
             }
             catch (Exception e)
             {

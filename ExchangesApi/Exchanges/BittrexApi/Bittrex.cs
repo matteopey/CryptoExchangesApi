@@ -10,8 +10,8 @@ namespace ExchangesApi.Exchanges.BittrexApi
 {
     public class Bittrex
     {
-        PublicMethods PublicApi;
-        PrivateMethods PrivateApi;
+        private readonly PublicMethods _publicApi;
+        private readonly PrivateMethods _privateApi;
 
         public Bittrex(Maybe<IDownloadData> downloader)
         {
@@ -23,15 +23,15 @@ namespace ExchangesApi.Exchanges.BittrexApi
 
             // We can call Single() safely because we are sure there is only one
             // instance of IDownloadData inside the Maybe
-            PublicApi = new PublicMethods(downloader.Single());
-            PrivateApi = new PrivateMethods();
+            _publicApi = new PublicMethods(downloader.Single());
+            _privateApi = new PrivateMethods();
         }
 
         public async Task<Markets> GetMarkets()
         {
             try
             {
-                return await PublicApi.Markets();
+                return await _publicApi.Markets();
             }
             catch (Exception e)
             {
@@ -43,7 +43,7 @@ namespace ExchangesApi.Exchanges.BittrexApi
         {
             try
             {
-                return await PublicApi.Currencies();
+                return await _publicApi.Currencies();
             }
             catch (Exception e)
             {
@@ -55,7 +55,7 @@ namespace ExchangesApi.Exchanges.BittrexApi
         {
             try
             {
-                return await PublicApi.Ticker(market);
+                return await _publicApi.Ticker(market);
             }
             catch (Exception e)
             {
@@ -67,7 +67,7 @@ namespace ExchangesApi.Exchanges.BittrexApi
         {
             try
             {
-                return await PublicApi.MarketSummaries();
+                return await _publicApi.MarketSummaries();
             }
             catch (Exception e)
             {
@@ -79,7 +79,7 @@ namespace ExchangesApi.Exchanges.BittrexApi
         {
             try
             {
-                return await PublicApi.MarketSummary(market);
+                return await _publicApi.MarketSummary(market);
             }
             catch (Exception e)
             {
@@ -91,7 +91,7 @@ namespace ExchangesApi.Exchanges.BittrexApi
         {
             try
             {
-                return await PublicApi.Orderbook(market, type);
+                return await _publicApi.Orderbook(market, type);
             }
             catch (Exception e)
             {
@@ -103,7 +103,7 @@ namespace ExchangesApi.Exchanges.BittrexApi
         {
             try
             {
-                return await PublicApi.MarketHistory(market);
+                return await _publicApi.MarketHistory(market);
             }
             catch (Exception e)
             {

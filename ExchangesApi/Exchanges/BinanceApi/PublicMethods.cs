@@ -9,13 +9,13 @@ using System.Threading.Tasks;
 
 namespace ExchangesApi.Exchanges.BinanceApi
 {
-    internal class PublicMethods
+    class PublicMethods
     {
-        private readonly IDownloadData downloader;
+        private readonly IDownloadData _downloader;
 
         public PublicMethods(IDownloadData downloader)
         {
-            this.downloader = downloader;
+            _downloader = downloader;
         }
 
         public async Task<ExchangeInfo> ExchangeInfo()
@@ -23,7 +23,7 @@ namespace ExchangesApi.Exchanges.BinanceApi
             try
             {
                 var response =
-                    await downloader.Get("exchangeInfo", new Maybe<FormUrlEncodedContent>());
+                    await _downloader.Get("exchangeInfo", new Maybe<FormUrlEncodedContent>());
                 return JsonConvert.DeserializeObject<ExchangeInfo>(response);
             }
             catch (Exception e)
@@ -44,7 +44,7 @@ namespace ExchangesApi.Exchanges.BinanceApi
                     }
                 ));
 
-                var response = await downloader.Get("depth", content);
+                var response = await _downloader.Get("depth", content);
                 return JsonConvert.DeserializeObject<Orderbook>(response);
             }
             catch (Exception e)
@@ -73,7 +73,7 @@ namespace ExchangesApi.Exchanges.BinanceApi
                     ));
                 }
 
-                var response = await downloader.Get("ticker/bookTicker", content);
+                var response = await _downloader.Get("ticker/bookTicker", content);
                 return JsonConvert.DeserializeObject<List<Ticker>>(response,
                     new SingleOrArrayConverter<Ticker>());
             }
@@ -103,7 +103,7 @@ namespace ExchangesApi.Exchanges.BinanceApi
                     content = new Maybe<FormUrlEncodedContent>();
                 }
 
-                var response = await downloader.Get("ticker/price", content);
+                var response = await _downloader.Get("ticker/price", content);
 
                 return JsonConvert.DeserializeObject<List<LastPriceTicker>>(response,
                     new SingleOrArrayConverter<LastPriceTicker>());
