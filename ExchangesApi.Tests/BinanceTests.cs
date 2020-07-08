@@ -91,5 +91,21 @@ namespace ExchangesApi.Tests
             Assert.Single(res);
             Assert.Equal("ETHBTC", res[0].Symbol);
         }
+
+        [Fact]
+        public async void Candlestick_Online_Default()
+        {
+            var r = new Maybe<IDownloadData>();
+            var b = new Binance(r);
+
+            var res = await b.Candlestick(
+                "ETHBTC",
+                "1h",
+                new Maybe<string>(),
+                new Maybe<string>(),
+                new Maybe<int>());
+
+            Assert.NotNull(res);
+        }
     }
 }

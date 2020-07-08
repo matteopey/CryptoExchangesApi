@@ -1,5 +1,6 @@
 ﻿using ExchangesApi.Exchanges.CoinbaseProApi.ApiCalls;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -58,7 +59,7 @@ namespace ExchangesApi.Exchanges.CoinbaseProApi
             }
         }
 
-        public async Task<Candles> GetCandlesAsync(
+        public async Task<List<Candle>> GetCandlesAsync(
             string productId,
             Maybe<string> startTime,
             Maybe<string> endTime,

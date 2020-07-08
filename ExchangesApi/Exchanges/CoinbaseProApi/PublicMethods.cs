@@ -65,7 +65,7 @@ namespace ExchangesApi.Exchanges.CoinbaseProApi
             }
         }
 
-        public async Task<Candles> GetCandles(
+        public async Task<List<Candle>> GetCandles(
             string productId,
             Maybe<string> startTime,
             Maybe<string> endTime,
@@ -85,7 +85,7 @@ namespace ExchangesApi.Exchanges.CoinbaseProApi
 
                 var result = await _downloadData.Send(req);
 
-                return JsonConvert.DeserializeObject<Candles>(result, new CandlesConverter());
+                return JsonConvert.DeserializeObject<List<Candle>>(result, new ArrayOfArraysConverter<Candle>());
             }
             catch (Exception e)
             {

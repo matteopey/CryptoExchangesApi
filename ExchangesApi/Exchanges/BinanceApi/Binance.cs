@@ -75,5 +75,22 @@ namespace ExchangesApi.Exchanges.BinanceApi
                 throw e;
             }
         }
+
+        public async Task<List<Candle>> Candlestick(
+            string symbol,
+            string interval,
+            Maybe<string> startTime,
+            Maybe<string> endTime,
+            Maybe<int> limit)
+        {
+            try
+            {
+                return await _publicApi.Candlestick(symbol, interval, startTime, endTime, limit);
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
     }
 }

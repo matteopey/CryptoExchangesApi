@@ -1,9 +1,5 @@
-﻿using System.Collections.Generic;
-
-namespace ExchangesApi.Exchanges.CoinbaseProApi.ApiCalls
+﻿namespace ExchangesApi.Exchanges.CoinbaseProApi.ApiCalls
 {
-    public class Candles : List<Candle> { }
-
     public class Candle
     {
         public long Time { get; set; }

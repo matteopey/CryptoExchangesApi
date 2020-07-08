@@ -113,5 +113,31 @@ namespace ExchangesApi.Exchanges.BinanceApi
                 throw e;
             }
         }
+
+        public async Task<List<Candle>> Candlestick(string symbol, string interval, Maybe<string> startTime, Maybe<string> endTime, Maybe<int> limit)
+        {
+            try
+            {
+                var queryParams = new Dictionary<string, string>
+                {
+                    { "symbol", symbol },
+                    { "interval", interval }
+                };
+
+                if (startTime.Any()) queryParams.Add("startTime", startTime.Single());
+                if (endTime.Any()) queryParams.Add("endTime", endTime.Single());
+                if (limit.Any()) queryParams.Add("limit", limit.Single().ToString());
+
+                var query = new FormUrlEncodedContent(queryParams);
+
+                var response = await _downloader.Get("klines", new Maybe<FormUrlEncodedContent>(query));
+
+                return JsonConvert.DeserializeObject<List<Candle>>(response, new ArrayOfArraysConverter<Candle>());
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
     }
 }

@@ -75,7 +75,7 @@ namespace ExchangesApi.Tests
 
         public async void GetCandles_AbuseApi()
         {
-            var results = new List<Candles>();
+            var results = new List<List<Candle>>();
 
             int i = 10;
             while (i > 0)
