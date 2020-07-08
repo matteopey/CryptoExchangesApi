@@ -57,5 +57,21 @@ namespace ExchangesApi.Exchanges.CoinbaseProApi
                 throw e;
             }
         }
+
+        public async Task<Candles> GetCandlesAsync(
+            string productId,
+            Maybe<string> startTime,
+            Maybe<string> endTime,
+            Maybe<string> granaularity)
+        {
+            try
+            {
+                return await _publicApi.GetCandles(productId, startTime, endTime, granaularity);
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
     }
 }

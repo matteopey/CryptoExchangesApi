@@ -1,6 +1,8 @@
 ﻿using ExchangesApi.Exchanges.CoinbaseProApi.ApiCalls;
 using Newtonsoft.Json;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
 
@@ -63,6 +65,34 @@ namespace ExchangesApi.Exchanges.CoinbaseProApi
             }
         }
 
+        public async Task<Candles> GetCandles(
+            string productId,
+            Maybe<string> startTime,
+            Maybe<string> endTime,
+            Maybe<string> granaularity)
+        {
+            try
+            {
+                var queryParams = new Dictionary<string, string>();
+
+                if (startTime.Any()) queryParams.Add("start", startTime.Single());
+                if (endTime.Any()) queryParams.Add("end", endTime.Single());
+                if (granaularity.Any()) queryParams.Add("granularity", granaularity.Single());
+
+                var query = new FormUrlEncodedContent(queryParams);
+
+                var req = await GetRequestMessage($"products/{productId}/candles", new Maybe<FormUrlEncodedContent>(query));
+
+                var result = await _downloadData.Send(req);
+
+                return JsonConvert.DeserializeObject<Candles>(result, new CandlesConverter());
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+
         private async Task<HttpRequestMessage> GetRequestMessage(string method, Maybe<FormUrlEncodedContent> parameters)
         {
             var uri = await _downloadData.CreateUrl(method, parameters);
@@ -72,6 +102,6 @@ namespace ExchangesApi.Exchanges.CoinbaseProApi
             req.Headers.Add("Accept", "application/json");
 
             return req;
-        }        
+        }
     }
 }
