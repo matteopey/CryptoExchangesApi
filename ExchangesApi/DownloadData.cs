@@ -51,7 +51,7 @@ namespace ExchangesApi
 
                 return await res.Content.ReadAsStringAsync();
             }
-            catch(HttpRequestException e)
+            catch (HttpRequestException e)
             {
                 throw e;
             }
@@ -93,8 +93,10 @@ namespace ExchangesApi
         public async Task<Uri> CreateUrl(string method, Maybe<FormUrlEncodedContent> parameters)
         {
             // Create uri with correct path
-            var uri = new UriBuilder(endpoint);
-            uri.Path = absolutePath + method;
+            var uri = new UriBuilder(endpoint)
+            {
+                Path = absolutePath + method
+            };
 
             // Add parameters in the query if present
             string par;
